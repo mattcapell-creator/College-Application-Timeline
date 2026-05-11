@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 50 Universities — Admissions Timeline 2026–2027</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    background: #fff;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* ── sticky top section ── */
+  .sticky-top {
+    flex-shrink: 0;
+    background: #fff;
+    z-index: 10;
+  }
+
+  .page-header { padding: 14px 20px 0; }
+  h1 { font-size: 15px; font-weight: 600; margin-bottom: 2px; color: #1a1a1a; }
+  .subtitle { font-size: 11px; color: #666; margin-bottom: 10px; }
+
+  .legend-box {
+    margin: 0 20px 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: #f9f9f9;
+  }
+  .legend-title { font-size: 10px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; }
+  .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; margin-bottom: 8px; }
+  .leg-row { display: flex; align-items: flex-start; gap: 8px; }
+  .leg-swatch { display: flex; align-items: center; padding-top: 3px; flex-shrink: 0; width: 30px; }
+  .leg-line { height: 2.5px; width: 24px; border-radius: 2px; }
+  .leg-line-dash { height: 0; width: 24px; border-top: 2.5px dashed; }
+  .leg-abbr { font-size: 11px; font-weight: 600; color: #1a1a1a; }
+  .leg-def { font-size: 10px; color: #555; margin-top: 1px; line-height: 1.35; }
+  .dot-row { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 8px; border-top: 1px solid #e0e0e0; }
+  .dli { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #444; }
+  .dswatch { width: 11px; height: 11px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); flex-shrink: 0; }
+
+  /* sticky axis bar */
+  .axis-bar {
+    padding: 0 20px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+  .axis-inner {
+    min-width: 700px;
+    display: flex;
+  }
+  .axis-label-pad {
+    flex-shrink: 0;
+  }
+  .axis-track {
+    flex: 1;
+    position: relative;
+    height: 22px;
+  }
+  .axis-tick-label {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #999;
+    white-space: nowrap;
+    top: 4px;
+  }
+
+  /* ── scrollable chart rows ── */
+  .chart-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: relative;
+    padding: 0 20px 20px;
+  }
+  .chart-inner {
+    min-width: 700px;
+    position: relative;
+  }
+
+  .school-row { display: flex; align-items: stretch; border-bottom: 1px solid #f0f0f0; }
+  .school-row:hover { background: #fafafa; }
+  .sl { padding: 3px 10px 3px 0; display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+  .rn { font-size: 10px; color: #bbb; width: 24px; text-align: right; flex-shrink: 0; }
+  .sn { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #1a1a1a; }
+  .bpub  { font-size: 9px; padding: 1px 4px; border-radius: 5px; background: #e8f5e0; color: #2d6e11; flex-shrink: 0; margin-left: 2px; }
+  .bpriv { font-size: 9px; padding: 1px 4px; border-radius: 5px; background: #e3eefb; color: #1456a0; flex-shrink: 0; margin-left: 2px; }
+  .tla { flex: 1; position: relative; }
+
+  #tip {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    padding: 5px 9px;
+    font-size: 11px;
+    color: #1a1a1a;
+    pointer-events: none;
+    z-index: 9999;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ STICKY TOP ══ -->
+<div class="sticky-top">
+
+  <div class="page-header">
+    <h1>Top 50 Universities — Admissions Timeline 2026–2027</h1>
+    <p class="subtitle">Projected dates for the Class of 2031 (entering fall 2027). Hover any dot for details. Verify all dates directly with each school.</p>
+  </div>
+
+  <div class="legend-box">
+    <div class="legend-title">Application round types — line color key</div>
+    <div class="legend-grid">
+      <div class="leg-row">
+        <div class="leg-swatch"><div class="leg-line" style="background:#534AB7"></div></div>
+        <div><div class="leg-abbr">REA / SCEA</div><div class="leg-def">Restrictive Early Action / Single-Choice Early Action — non-binding, but you may not apply early to other private schools. Used by Harvard, Princeton, Yale, Stanford, Notre Dame, Caltech.</div></div>
+      </div>
+      <div class="leg-row">
+        <div class="leg-swatch"><div class="leg-line" style="background:#D85A30"></div></div>
+        <div><div class="leg-abbr">ED — Early Decision</div><div class="leg-def">Binding commitment — if admitted you must enroll and withdraw all other applications. Used by most other top private schools. Typically Nov 1 deadline, mid-Dec decision.</div></div>
+      </div>
+      <div class="leg-row">
+        <div class="leg-swatch"><div class="leg-line-dash" style="border-color:#1D9E75"></div></div>
+        <div><div class="leg-abbr">EA — Early Action</div><div class="leg-def">Non-binding early round. Common at public universities. Apply Oct–Nov, hear back Dec–Feb. Can apply EA to multiple schools. Still decide by May 1.</div></div>
+      </div>
+      <div class="leg-row">
+        <div class="leg-swatch"><div class="leg-line" style="background:#888780"></div></div>
+        <div><div class="leg-abbr">RD — Regular Decision</div><div class="leg-def">Standard non-binding round. Deadlines Jan–Feb, decisions Mar–Apr. No commitment required until May 1 (National Reply Date).</div></div>
+      </div>
+      <div class="leg-row">
+        <div class="leg-swatch"><div class="leg-line" style="background:#BA7517"></div></div>
+        <div><div class="leg-abbr">UC — University of California</div><div class="leg-def">All 9 UC campuses share one application. Single Nov 30 deadline for everyone — no early option. Decisions released Mar–Apr.</div></div>
+      </div>
+    </div>
+    <div class="dot-row">
+      <div class="dli"><div class="dswatch" style="background:#2D8A2D"></div><strong>Green dot</strong> — application deadline</div>
+      <div class="dli"><div class="dswatch" style="background:#E8A020"></div><strong>Amber dot</strong> — decision released</div>
+      <div class="dli"><div class="dswatch" style="background:#CC2222"></div><strong>Red dot</strong> — commitment deadline</div>
+    </div>
+  </div>
+
+  <!-- sticky month axis -->
+  <div class="axis-bar" id="axis-bar">
+    <div class="axis-inner" id="axis-inner">
+      <div class="axis-label-pad" id="axis-pad"></div>
+      <div class="axis-track" id="axis-track"></div>
+    </div>
+  </div>
+
+</div>
+<!-- ══ END STICKY TOP ══ -->
+
+<!-- scrollable rows -->
+<div class="chart-scroll" id="scroll-area">
+  <div class="chart-inner" id="chart"></div>
+  <div id="tip"></div>
+</div>
+
+<script>
+const S=[
+ {k:1,n:"Princeton",t:"Priv",r:[{y:"REA",a:"2026-11-01",d:"2026-12-15",c:"2027-05-01"},{y:"RD",a:"2027-01-01",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:2,n:"MIT",t:"Priv",r:[{y:"EA",a:"2026-11-01",d:"2026-12-15",c:"2027-05-01"},{y:"RD",a:"2027-01-05",d:"2027-03-14",c:"2027-05-01"}]},
+ {k:3,n:"Harvard",t:"Priv",r:[{y:"REA",a:"2026-11-01",d:"2026-12-15",c:"2027-05-01"},{y:"RD",a:"2027-01-01",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:4,n:"Stanford",t:"Priv",r:[{y:"REA",a:"2026-11-01",d:"2026-12-15",c:"2027-05-01"},{y:"RD",a:"2027-01-05",d:"2027-03-27",c:"2027-05-01"}]},
+ {k:4,n:"Yale",t:"Priv",r:[{y:"REA",a:"2026-11-01",d:"2026-12-15",c:"2027-05-01"},{y:"RD",a:"2027-01-02",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:6,n:"U. Chicago",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-06",d:"2027-03-20",c:"2027-05-01"}]},
+ {k:7,n:"Duke",t:"Priv",r:[{y:"ED",a:"2026-11-04",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-02",d:"2027-03-28",c:"2027-05-01"}]},
+ {k:7,n:"Johns Hopkins",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-12",c:"2026-12-26"},{y:"RD",a:"2027-01-02",d:"2027-03-18",c:"2027-05-01"}]},
+ {k:7,n:"Northwestern",t:"Priv",r:[{y:"ED",a:"2026-11-04",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-02",d:"2027-03-25",c:"2027-05-01"}]},
+ {k:7,n:"U. Pennsylvania",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-05",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:11,n:"Caltech",t:"Priv",r:[{y:"REA",a:"2026-11-01",d:"2026-12-15",c:"2027-05-01"},{y:"RD",a:"2027-01-03",d:"2027-03-12",c:"2027-05-01"}]},
+ {k:12,n:"Cornell",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-02",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:13,n:"Brown",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-03",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:13,n:"Dartmouth",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-02",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:15,n:"Columbia",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-02",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:15,n:"UC Berkeley",t:"Pub",r:[{y:"UC",a:"2026-11-30",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:17,n:"Rice",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-01",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:17,n:"UCLA",t:"Pub",r:[{y:"UC",a:"2026-11-30",d:"2027-03-25",c:"2027-05-01"}]},
+ {k:17,n:"Vanderbilt",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-01",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:20,n:"Carnegie Mellon",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-02",d:"2027-03-16",c:"2027-05-01"}]},
+ {k:20,n:"U. Michigan",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2027-01-31",c:"2027-05-01"},{y:"RD",a:"2027-02-01",d:"2027-04-03",c:"2027-05-01"}]},
+ {k:20,n:"Notre Dame",t:"Priv",r:[{y:"REA",a:"2026-11-01",d:"2026-12-15",c:"2027-05-01"},{y:"RD",a:"2027-01-01",d:"2027-03-26",c:"2027-05-01"}]},
+ {k:20,n:"WashU St. Louis",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-12",c:"2026-12-26"},{y:"RD",a:"2027-01-02",d:"2027-03-20",c:"2027-05-01"}]},
+ {k:24,n:"Emory",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-01",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:24,n:"Georgetown",t:"Priv",r:[{y:"EA",a:"2026-11-01",d:"2026-12-20",c:"2027-05-01"},{y:"RD",a:"2027-01-10",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:26,n:"UNC Chapel Hill",t:"Pub",r:[{y:"EA",a:"2026-10-15",d:"2027-01-15",c:"2027-05-01"},{y:"RD",a:"2027-01-15",d:"2027-03-31",c:"2027-05-01"}]},
+ {k:26,n:"U. Virginia",t:"Pub",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-05",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:28,n:"USC",t:"Priv",r:[{y:"EA",a:"2026-11-01",d:"2027-01-25",c:"2027-05-01"},{y:"RD",a:"2027-01-15",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:29,n:"UC San Diego",t:"Pub",r:[{y:"UC",a:"2026-11-30",d:"2027-03-15",c:"2027-05-01"}]},
+ {k:30,n:"U. Florida",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2027-01-23",c:"2027-05-01"},{y:"RD",a:"2027-03-01",d:"2027-03-13",c:"2027-05-01"}]},
+ {k:30,n:"UT Austin",t:"Pub",r:[{y:"EA",a:"2026-10-15",d:"2027-01-15",c:"2027-05-01"},{y:"RD",a:"2026-12-01",d:"2027-02-15",c:"2027-05-01"}]},
+ {k:32,n:"Georgia Tech",t:"Pub",r:[{y:"EA",a:"2026-10-15",d:"2026-12-05",c:"2027-05-01"},{y:"RD",a:"2027-01-06",d:"2027-03-10",c:"2027-05-01"}]},
+ {k:32,n:"NYU",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-11",c:"2026-12-25"},{y:"RD",a:"2027-01-05",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:32,n:"UC Davis",t:"Pub",r:[{y:"UC",a:"2026-11-30",d:"2027-03-15",c:"2027-05-01"}]},
+ {k:32,n:"UC Irvine",t:"Pub",r:[{y:"UC",a:"2026-11-30",d:"2027-03-25",c:"2027-05-01"}]},
+ {k:36,n:"Boston College",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-03",d:"2027-03-17",c:"2027-05-01"}]},
+ {k:36,n:"Tufts",t:"Priv",r:[{y:"ED",a:"2026-11-04",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-06",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:36,n:"UIUC",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2027-01-30",c:"2027-05-01"},{y:"RD",a:"2027-01-05",d:"2027-03-06",c:"2027-05-01"}]},
+ {k:36,n:"U. Wisconsin",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2027-01-31",c:"2027-05-01"},{y:"RD",a:"2027-02-01",d:"2027-03-31",c:"2027-05-01"}]},
+ {k:40,n:"UC Santa Barbara",t:"Pub",r:[{y:"UC",a:"2026-11-30",d:"2027-03-15",c:"2027-05-01"}]},
+ {k:41,n:"Ohio State",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2026-12-12",c:"2027-05-01"},{y:"RD",a:"2027-02-01",d:"2027-03-06",c:"2027-05-01"}]},
+ {k:42,n:"Boston University",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-02",d:"2027-03-28",c:"2027-05-01"}]},
+ {k:42,n:"Rutgers",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2027-02-15",c:"2027-05-01"},{y:"RD",a:"2026-12-01",d:"2027-03-31",c:"2027-05-01"}]},
+ {k:42,n:"U. Maryland",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2027-02-01",c:"2027-05-01"},{y:"RD",a:"2027-01-20",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:42,n:"U. Washington",t:"Pub",r:[{y:"EA",a:"2026-11-15",d:"2027-03-08",c:"2027-05-01"}]},
+ {k:46,n:"Lehigh",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-15",d:"2027-03-25",c:"2027-05-01"}]},
+ {k:46,n:"Northeastern",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"EA",a:"2026-11-01",d:"2027-02-15",c:"2027-05-01"},{y:"RD",a:"2027-01-01",d:"2027-04-01",c:"2027-05-01"}]},
+ {k:46,n:"Purdue",t:"Pub",r:[{y:"EA",a:"2026-11-01",d:"2027-01-15",c:"2027-05-01"},{y:"RD",a:"2027-01-15",d:"2027-03-31",c:"2027-05-01"}]},
+ {k:46,n:"U. Georgia",t:"Pub",r:[{y:"EA",a:"2026-10-15",d:"2026-11-21",c:"2027-05-01"},{y:"RD",a:"2027-01-01",d:"2027-03-15",c:"2027-05-01"}]},
+ {k:46,n:"U. Rochester",t:"Priv",r:[{y:"ED",a:"2026-11-01",d:"2026-12-15",c:"2026-12-29"},{y:"RD",a:"2027-01-05",d:"2027-04-01",c:"2027-05-01"}]}
+];
+
+const T0=new Date("2026-10-01"),T1=new Date("2027-05-10"),SPAN=T1-T0;
+const LC={REA:"#534AB7",ED:"#D85A30",EA:"#1D9E75",UC:"#BA7517",RD:"#888780"};
+const TL={REA:"REA/SCEA",ED:"ED",EA:"EA",UC:"UC",RD:"RD"};
+const MONTHS=[
+  {d:"2026-10-01",l:"Oct '26"},{d:"2026-11-01",l:"Nov '26"},{d:"2026-12-01",l:"Dec '26"},
+  {d:"2027-01-01",l:"Jan '27"},{d:"2027-02-01",l:"Feb '27"},{d:"2027-03-01",l:"Mar '27"},
+  {d:"2027-04-01",l:"Apr '27"},{d:"2027-05-01",l:"May '27"}
+];
+const LW=205, RH=20, PAD=3, DR=6;
+
+function p(ds){return Math.max(0,Math.min(100,(new Date(ds)-T0)/SPAN*100));}
+function fmt(ds){return new Date(ds).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
+
+/* keep sticky axis in sync with horizontal scroll of chart area */
+document.getElementById("scroll-area").addEventListener("scroll",function(){
+  document.getElementById("axis-bar").style.marginLeft="0";
+  document.getElementById("axis-inner").style.transform=
+    "translateX(-"+this.scrollLeft+"px)";
+},{passive:true});
+
+let resizeFns=[];
+
+function draw(canvas,rnds,rowH){
+  const W=canvas.parentElement?canvas.parentElement.offsetWidth||700:700;
+  const DPR=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.round(W*DPR);
+  canvas.height=Math.round(rowH*DPR);
+  canvas.style.width=W+"px";
+  canvas.style.height=rowH+"px";
+  const ctx=canvas.getContext("2d");
+  ctx.scale(DPR,DPR);
+  ctx.clearRect(0,0,W,rowH);
+  MONTHS.forEach(m=>{
+    const x=W*p(m.d)/100;
+    ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,rowH);
+    ctx.strokeStyle="rgba(0,0,0,0.07)";ctx.lineWidth=1;ctx.setLineDash([]);ctx.stroke();
+  });
+  rnds.forEach((rnd,i)=>{
+    const cy=PAD+i*RH+RH/2;
+    const xA=W*p(rnd.a)/100,xD=W*p(rnd.d)/100,xC=W*p(rnd.c)/100;
+    const col=LC[rnd.y]||"#888";
+    ctx.beginPath();ctx.moveTo(xA,cy);ctx.lineTo(xC,cy);
+    ctx.strokeStyle=col;ctx.lineWidth=1.5;
+    ctx.setLineDash(rnd.y==="EA"?[5,3]:[]);
+    ctx.stroke();ctx.setLineDash([]);
+    [[xA,"#2D8A2D"],[xD,"#E8A020"],[xC,"#CC2222"]].forEach(([x,fill])=>{
+      ctx.beginPath();ctx.arc(x,cy,DR,0,Math.PI*2);
+      ctx.fillStyle=fill;ctx.fill();
+      ctx.beginPath();ctx.arc(x,cy,DR,0,Math.PI*2);
+      ctx.strokeStyle="#ffffff";ctx.lineWidth=2;ctx.stroke();
+    });
+  });
+}
+
+function buildAxis(){
+  const pad=document.getElementById("axis-pad");
+  const track=document.getElementById("axis-track");
+  pad.style.cssText=`width:${LW}px;min-width:${LW}px;flex-shrink:0`;
+  track.innerHTML="";
+  MONTHS.forEach(m=>{
+    const sp=document.createElement("span");
+    sp.className="axis-tick-label";
+    sp.style.left=p(m.d)+"%";
+    sp.textContent=m.l;
+    track.appendChild(sp);
+  });
+}
+
+function buildChart(){
+  resizeFns.forEach(f=>window.removeEventListener("resize",f));
+  resizeFns=[];
+  const container=document.getElementById("chart");
+  container.innerHTML="";
+
+  S.forEach(s=>{
+    const rowH=s.r.length*RH+PAD*2;
+    const row=document.createElement("div");
+    row.className="school-row";
+    row.style.minHeight=rowH+"px";
+
+    const lbl=document.createElement("div");
+    lbl.className="sl";
+    lbl.style.cssText=`width:${LW}px;min-width:${LW}px;height:${rowH}px`;
+    lbl.innerHTML=`<span class="rn">#${s.k}</span><div style="min-width:0"><div class="sn">${s.n}</div><span class="${s.t==="Pub"?"bpub":"bpriv"}">${s.t}</span></div>`;
+    row.appendChild(lbl);
+
+    const tla=document.createElement("div");
+    tla.className="tla";
+    tla.style.cssText=`flex:1;position:relative;height:${rowH}px`;
+
+    const cv=document.createElement("canvas");
+    cv.style.cssText="position:absolute;top:0;left:0;pointer-events:none";
+    cv.setAttribute("aria-hidden","true");
+    tla.appendChild(cv);
+
+    const drawFn=()=>draw(cv,s.r,rowH);
+    resizeFns.push(drawFn);
+    window.addEventListener("resize",drawFn,{passive:true});
+    setTimeout(drawFn,40);
+
+    s.r.forEach((rnd,i)=>{
+      const cy=PAD+i*RH+RH/2;
+      [[rnd.a,"App: "],[rnd.d,"Decision: "],[rnd.c,"Commit: "]].forEach(([ds,pre])=>{
+        const hit=document.createElement("div");
+        hit.style.cssText=`position:absolute;top:${cy-DR-5}px;left:calc(${p(ds)}% - ${DR+5}px);width:${(DR+5)*2}px;height:${(DR+5)*2}px;cursor:pointer;z-index:3;border-radius:50%`;
+        hit.dataset.label=`${s.n}  ·  ${TL[rnd.y]}  ·  ${pre}${fmt(ds)}`;
+        hit.addEventListener("mouseenter",e=>{
+          const tip=document.getElementById("tip");
+          tip.textContent=e.currentTarget.dataset.label;
+          tip.style.display="block";
+
+          const scrollArea=document.getElementById("scroll-area");
+          const scrollRect=scrollArea.getBoundingClientRect();
+          const hitRect=e.currentTarget.getBoundingClientRect();
+          const tipW=tip.offsetWidth;
+          const tipH=tip.offsetHeight;
+
+          let left=(hitRect.left-scrollRect.left)+scrollArea.scrollLeft+(hitRect.width/2)-(tipW/2);
+          let top=(hitRect.top-scrollRect.top)+scrollArea.scrollTop-tipH-8;
+          if(top<scrollArea.scrollTop+4) top=(hitRect.top-scrollRect.top)+scrollArea.scrollTop+hitRect.height+6;
+          left=Math.max(4,Math.min(left,scrollArea.scrollWidth-tipW-4));
+
+          tip.style.left=left+"px";
+          tip.style.top=top+"px";
+        });
+        hit.addEventListener("mouseleave",()=>{document.getElementById("tip").style.display="none";});
+        tla.appendChild(hit);
+      });
+    });
+
+    row.appendChild(tla);
+    container.appendChild(row);
+  });
+}
+
+buildAxis();
+buildChart();
+</script>
+</body>
+</html>
